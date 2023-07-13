@@ -1,0 +1,10 @@
+{
+  "signedIn": "You are signed in!",
+  "loggedIn": "You are logged in!",
+  "passwordHasBeenReset": "Your password has been reset!",
+  "loggedOut": "You are logged out!",
+  "passwordChangedSuccessfully": "Password changed successfully!",
+  "nameChangedSuccessfully": "Name changed successfully!",
+  "languageChanged": "Language changed!",
+  "themeChanged": "Theme changed!"
+}

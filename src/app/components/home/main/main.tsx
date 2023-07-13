@@ -3,7 +3,7 @@
 import React from 'react';
 import {Grid, Typography} from '@mui/material';
 // import {useNavigate} from 'react-router-dom';
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Button from '../../common/Button';
 import {useRouter} from 'next/navigation';
 
@@ -11,7 +11,7 @@ import {useRouter} from 'next/navigation';
 
 const Main = () => {
     const router = useRouter();
-    //   const { t } = useTranslation();
+      const { t } = useTranslation();
 
     const handleRedirect = () => {
         router.push('/');
@@ -20,13 +20,11 @@ const Main = () => {
     return (
         <Grid container alignItems="center" height="100%" flexDirection="column" py={2}>
             <Grid item xs={6}>
-                <Typography variant="h2">PLAN YOUR TRIP</Typography>
-                {/* <Typography variant="h2">{t("planYourTrip")}</Typography> */}
+                <Typography variant="h2">{t("planYourTrip")}</Typography>
             </Grid>
             <Grid item xs={6}>
                 <Button onClick={handleRedirect} color="primary">
-                    PLAN YOUR TRIP
-                    {/* {t("planYourTrip")} */}
+                    {t("planYourTrip")}
                 </Button>
             </Grid>
         </Grid>

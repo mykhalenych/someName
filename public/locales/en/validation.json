@@ -1,0 +1,6 @@
+{
+  "isRequired": "Field is required",
+  "isMatch": "The password does not match",
+  "isValidEmail": "Email must be a valid email",
+  "minLength": "Field is too short - should be {{min}} chars minimum"
+}
