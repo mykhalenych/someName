@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import {useForm, FormProvider} from 'react-hook-form';
 import {Grid, Typography} from '@mui/material';
@@ -6,17 +7,21 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useTranslation} from 'react-i18next';
 
 import {validation, defaultValues} from './form';
-import {ILoginProps} from './types';
+import {useAppDispatch} from '../../../redux/store';
 import {logInUser} from '../../../redux/auth/thunks';
 import InputControl from '../../../components/common/form/InputControl';
 import Button from '../../../components/common/Button';
 import {FORGOT_PATH, SIGN_IN_PATH} from '../../../Routes/constants';
-import {useAppDispatch} from '../../../redux/store';
+import {authThunkNames} from '../../../redux/auth/constants';
+import {selectLoading} from '../../../redux/selectors';
+import {ISlicesNames} from '../../../redux/types';
+import {ILoginProps} from './types';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {t} = useTranslation();
+    const isLoading = useSelector(selectLoading(ISlicesNames.auth, authThunkNames.logInUser));
 
     const methods = useForm<ILoginProps>({
         resolver: yupResolver(validation),
@@ -62,7 +67,7 @@ const Login = () => {
                             minWidth={180}>
                             {t('forgotPassword.btn')}
                         </Button>
-                        <Button type="submit" variant="contained" color="primary" minWidth={100}>
+                        <Button isLoading={isLoading} type="submit" variant="contained" color="primary" minWidth={100}>
                             {t('logIn.btn')}
                         </Button>
                     </Grid>

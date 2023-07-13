@@ -1,12 +1,14 @@
 import React from 'react';
-import type {ButtonProps} from '@mui/material';
+import {CircularProgress, type ButtonProps} from '@mui/material';
 
 import StyledButton from './Styles';
 import {CustomButtonProps} from './types';
+import {Progress} from '../loader/Progress';
 
 const Button: React.FC<CustomButtonProps & ButtonProps> = ({
     minWidth = 240,
 
+    isLoading = false,
     variant = 'outlined',
     color = 'primary',
     children,
@@ -14,7 +16,7 @@ const Button: React.FC<CustomButtonProps & ButtonProps> = ({
 }) => {
     return (
         <StyledButton sx={{minWidth: minWidth}} variant={variant} color={color} {...rest}>
-            {children}
+            {isLoading ? <CircularProgress size={35} thickness={5} /> : children}
         </StyledButton>
     );
 };

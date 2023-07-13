@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Grid, Typography} from '@mui/material';
 import {useForm, FormProvider} from 'react-hook-form';
@@ -8,17 +9,22 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../redux/store';
 import {newPassword} from '../../../redux/auth/thunks';
 import InputControl from '../../../components/common/form/InputControl';
-import {PasswordProps} from './types';
 import {defaultValues, validation} from './form';
 import Button from '../../../components/common/Button';
 import {LOGIN_PATH} from '../../../Routes/constants';
+import {authThunkNames} from '../../../redux/auth/constants';
+import {selectLoading} from '../../../redux/selectors';
+import {ISlicesNames} from '../../../redux/types';
+import {PasswordProps} from './types';
 
 const RecoveryPassword = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {resetToken} = useParams();
     const {t} = useTranslation();
-
+    const isLoading = useSelector(
+        selectLoading(ISlicesNames.auth, [authThunkNames.changePassword, authThunkNames.forgotPassword]),
+    );
     const methods = useForm<PasswordProps>({
         resolver: yupResolver(validation),
         defaultValues,
@@ -65,10 +71,14 @@ const RecoveryPassword = () => {
                         />
                     </Grid>
                     <Grid container item xs={12} justifyContent="space-between">
-                        <Button type="submit" variant="contained" color="primary" minWidth={100}>
+                        <Button isLoading={isLoading} type="submit" variant="contained" color="primary" minWidth={100}>
                             {t('recoveryPassword.btnSave')}
                         </Button>
-                        <Button onClick={() => handleRedirect('/')} color="primary" minWidth={100}>
+                        <Button
+                            isLoading={isLoading}
+                            onClick={() => handleRedirect('/')}
+                            color="primary"
+                            minWidth={100}>
                             {t('recoveryPassword.btnCancel')}
                         </Button>
                     </Grid>

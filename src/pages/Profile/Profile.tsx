@@ -1,16 +1,19 @@
 import React, {useEffect} from 'react';
-import {useSelector} from 'react-redux';
 import {useForm, FormProvider} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {ISlicesNames} from '../../redux/types';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {Grid, Typography} from '@mui/material';
 
 import {changeUserName, changeUserPassword} from '../../redux/auth/thunks';
 import {selectUser} from '../../redux/auth/selectors';
+import {selectLoading} from '../../redux/selectors';
 import {useAppDispatch} from '../../redux/store';
 import {nameValidation, defaultNameValue, defaultPasswordValue, passwordValidation} from './form';
-import {Grid, Typography} from '@mui/material';
+import {authThunkNames} from '../../redux/auth/constants';
 import Button from '../../components/common/Button';
 import InputControl from '../../components/common/form/InputControl';
-import {useTranslation} from 'react-i18next';
 
 const Profile = () => {
     const dispatch = useAppDispatch();
@@ -45,6 +48,10 @@ const Profile = () => {
 
     const isPasswordFilled = password && passwordConfirmation && newPassword;
     const isPasswordCorrect = !errors.password && !errors.passwordConfirmation && !errors.newPassword;
+
+    const isLoadingChangeName = useSelector(selectLoading(ISlicesNames.auth, authThunkNames.changeName));
+
+    const isLoadingChangePassword = useSelector(selectLoading(ISlicesNames.auth, authThunkNames.changePassword));
 
     const handleChangeName = () => {
         dispatch(changeUserName(newName));
@@ -82,6 +89,7 @@ const Profile = () => {
                                     </Grid>
                                     <Grid item xs={3}>
                                         <Button
+                                            isLoading={isLoadingChangeName}
                                             variant="contained"
                                             color="primary"
                                             minWidth={190}
@@ -120,6 +128,7 @@ const Profile = () => {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Button
+                                        isLoading={isLoadingChangePassword}
                                         variant="contained"
                                         color="primary"
                                         minWidth={190}
